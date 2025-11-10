@@ -142,7 +142,6 @@ class AnalyticsPage extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             SizedBox(
-              height: 200,
               child: _SimpleBarChart(data: data.activityByDay),
             ),
           ],
@@ -244,7 +243,9 @@ class _SimpleBarChart extends StatelessWidget {
             ),
           ],
         );
+        
       }).toList(),
+
     );
   }
 }
