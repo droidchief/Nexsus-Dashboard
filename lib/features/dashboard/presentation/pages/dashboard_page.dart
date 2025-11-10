@@ -131,7 +131,7 @@ class DashboardPage extends StatelessWidget {
 }
 
 class _ModuleCard extends StatelessWidget {
-  final module;
+  final dynamic module;
 
   const _ModuleCard({required this.module});
 
