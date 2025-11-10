@@ -252,7 +252,7 @@ jobs:
                   username: ${{ secrets.EMAIL_USERNAME }}
                   password: ${{ secrets.EMAIL_PASSWORD }}
                   subject: Nexus Dashboard - Build Failed
-                  to: victor@example.com
+                  to: lovedayv7@gmail.com
                   from: CI/CD Pipeline
                   body: |
                       Build failed for Nexus Dashboard
