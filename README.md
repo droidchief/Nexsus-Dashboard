@@ -5,7 +5,7 @@
 [![Flutter](https://img.shields.io/badge/Flutter-3.0+-02569B?logo=flutter)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/Dart-3.0+-0175C2?logo=dart)](https://dart.dev)
 
-## 📋 Table of Contents
+## Table of Contents
 
 - [Overview](#overview)
 - [Architecture](#architecture)
@@ -20,7 +20,7 @@
 
 ---
 
-## 🎯 Overview
+## Overview
 
 Nexus Dashboard is a production-ready modular mobile application built with Flutter that showcases enterprise-level architecture patterns. The application serves as a personal systems dashboard where independent widgets (Notes, AI Chat, Analytics) can be dynamically loaded, managed, and updated without affecting the core application shell.
 
@@ -35,7 +35,7 @@ Nexus Dashboard is a production-ready modular mobile application built with Flut
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 ### High-Level Architecture Overview
 
@@ -104,37 +104,33 @@ User Action → BLoC Event → Repository → Data Source
 
 ---
 
-## ✨ Features
+## Features
 
 ### 1. Dynamic Widget Loading
 - Widgets implement `IModule` interface
 - Runtime discovery via `ModuleRegistry`
 - Hot-swappable without app restart
-- Independent versioning per module
 
 ### 2. Three Core Modules
 
-#### 📝 Notes Module
+#### Notes Module
 - Create, read, and delete notes
-- Offline-first with automatic sync
-- Search and filter capabilities
+- Offline-first with sync option
 - Timestamp tracking
 
-#### 💬 AI Chat Module
+#### AI Chat Module
 - Mock conversational AI interface
 - Message history persistence
-- Real-time typing simulation
 - Clear chat functionality
 
-#### 📊 Analytics Module
+#### Analytics Module
 - Dashboard statistics overview
-- Weekly activity visualization
+- Activity visualization
 - Storage usage tracking
 - Last sync information
 
 ### 3. Offline Capabilities
 - Full CRUD operations without network
-- Automatic background synchronization
 - Queue-based sync with retry logic
 - Conflict resolution strategies
 
@@ -146,7 +142,7 @@ User Action → BLoC Event → Repository → Data Source
 
 ---
 
-## 🛠️ Framework & Libraries
+## Framework & Libraries
 
 ### Framework Choice: Flutter
 
@@ -191,7 +187,7 @@ Network: Connectivity Monitoring
 
 ---
 
-## 🔄 State Management
+## State Management
 
 ### Design Philosophy
 
@@ -271,7 +267,7 @@ class AnalyticsBloc {
 
 ---
 
-## 💾 Offline Handling
+## Offline Handling
 
 ### Offline-First Strategy
 
@@ -388,11 +384,11 @@ Conflict Detection:
 
 ---
 
-## 🚀 CI/CD Strategy
+## CI/CD Strategy
 
 ### Overview
 
-Nexus Dashboard implements a comprehensive CI/CD pipeline using **GitHub Actions** for automated building, testing, and deployment to both iOS App Store and Google Play Store.
+Nexus Dashboard implements a comprehensive CI/CD pipeline using **GitHub Actions** for automated building
 
 ### Pipeline Architecture
 
@@ -402,9 +398,6 @@ Code Push → GitHub Actions Trigger
 ┌───────────────────────┐
 │   Build & Test Stage  │
 │  - Lint code          │
-│  - Run unit tests     │
-│  - Run widget tests   │
-│  - Generate coverage  │
 └───────────────────────┘
     ↓
 ┌───────────────────────┐
@@ -415,16 +408,7 @@ Code Push → GitHub Actions Trigger
 └───────────────────────┘
     ↓
 ┌───────────────────────┐
-│   Deploy Stage        │
-│  - Deploy to Firebase │
-│    App Distribution   │
-│  - Deploy to TestFlight│
-│  - Deploy to Play Store│
-└───────────────────────┘
-    ↓
-┌───────────────────────┐
 │  Notification Stage   │
-│  - Slack notification │
 │  - Email reports      │
 └───────────────────────┘
 ```
@@ -440,114 +424,10 @@ Code Push → GitHub Actions Trigger
 
 **Jobs:**
 - Code linting with `flutter analyze`
-- Unit tests with coverage >80%
-- Widget tests for UI components
-- Integration tests (optional)
-
-#### 2. Continuous Deployment (CD)
-
-**Deployment Environments:**
-
-| Environment | Trigger | Target |
-|-------------|---------|--------|
-| Development | Push to `develop` | Firebase App Distribution |
-| Staging | Tag with `v*-beta` | TestFlight + Internal Testing |
-| Production | Tag with `v*` | App Store + Play Store |
-
-### Release Management Strategy
-
-#### Versioning Strategy
-
-**Semantic Versioning: `MAJOR.MINOR.PATCH+BUILD`**
-
-```
-Example: 1.2.3+45
-├── 1: Major version (breaking changes)
-├── 2: Minor version (new features)
-├── 3: Patch version (bug fixes)
-└── 45: Build number (auto-incremented)
-```
-
-#### Release Process
-
-```
-1. Development
-   ↓
-   Feature branches → develop
-   
-2. Testing
-   ↓
-   develop → staging
-   Beta testing via TestFlight/Internal Testing
-   
-3. Production Release
-   ↓
-   staging → main
-   Tag release (e.g., v1.0.0)
-   Auto-deploy to stores
-   
-4. Hotfix (if needed)
-   ↓
-   main → hotfix/[issue]
-   Tag patch release (e.g., v1.0.1)
-   Auto-deploy
-```
-
-#### Feature Rollout Strategy
-
-**Phased Rollout:**
-```
-Stage 1: Internal Testing (1-2 days)
-   └─ QA team + stakeholders
-
-Stage 2: Beta Testing (3-5 days)
-   └─ 10% of users via Firebase Remote Config
-
-Stage 3: Gradual Rollout (7-14 days)
-   └─ 25% → 50% → 100% via Play Store staged rollout
-
-Stage 4: Full Release
-   └─ 100% of users
-```
-
-**Feature Flags:**
-```dart
-// Enable/disable features remotely
-RemoteConfig.getValue('enable_new_analytics_widget');
-```
-
-### Automated Testing Strategy
-
-```
-Test Pyramid:
-├── Unit Tests (70%)
-│   └─ Test business logic, repositories, BLoCs
-├── Widget Tests (20%)
-│   └─ Test UI components in isolation
-└── Integration Tests (10%)
-    └─ Test complete user flows
-```
-
-### Monitoring & Rollback
-
-**Post-Deployment Monitoring:**
-- Crash reporting via Firebase Crashlytics
-- Performance monitoring
-- User analytics
-- Error rate tracking
-
-**Rollback Strategy:**
-```
-If critical issue detected:
-1. Pause rollout immediately
-2. Roll back to previous version
-3. Fix issue in hotfix branch
-4. Deploy patch with expedited review
-```
 
 ---
 
-## 🚦 Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -566,7 +446,7 @@ Git
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/yourusername/nexus_dashboard.git
+git clone https://github.com/droidchief/Nexsus-Dashboard
 cd nexus_dashboard
 
 # 2. Install dependencies
@@ -600,7 +480,7 @@ flutter run -d iphone
 
 ---
 
-## ➕ Adding New Widgets
+## Adding New Widgets
 
 Follow these steps to add a new widget module to Nexus Dashboard:
 
@@ -889,7 +769,7 @@ flutter run
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 ```
 nexus_dashboard/
@@ -930,7 +810,7 @@ nexus_dashboard/
 
 ---
 
-## 📈 Performance Considerations
+## Performance Considerations
 
 - **Lazy Loading**: Modules loaded on-demand
 - **Const Constructors**: Minimize widget rebuilds
@@ -940,23 +820,7 @@ nexus_dashboard/
 
 ---
 
-## 🧪 Testing
-
-```bash
-# Run all tests
-flutter test
-
-# Run with coverage
-flutter test --coverage
-
-# View coverage report
-genhtml coverage/lcov.info -o coverage/html
-open coverage/html/index.html
-```
-
----
-
-## 👤 Author
+## Author
 
 **Victor Loveday**  
 Senior Mobile Developer  
