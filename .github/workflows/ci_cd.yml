@@ -243,20 +243,6 @@ jobs:
         if: always()
 
         steps:
-            - name: 💬 Slack Notification
-              uses: 8398a7/action-slack@v3
-              if: always()
-              with:
-                  status: ${{ job.status }}
-                  text: |
-                      Nexus Dashboard CI/CD Pipeline
-                      Commit: ${{ github.sha }}
-                      Author: ${{ github.actor }}
-                      Branch: ${{ github.ref_name }}
-                      Status: ${{ job.status }}
-                  webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
-                  fields: repo,message,commit,author,action,eventName,ref,workflow
-
             - name: 📧 Email Notification
               if: failure()
               uses: dawidd6/action-send-mail@v3
