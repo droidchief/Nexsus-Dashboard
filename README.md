@@ -828,7 +828,7 @@ Senior Mobile Developer
 
 ---
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - Flutter team for the amazing framework
 - BLoC library maintainers
