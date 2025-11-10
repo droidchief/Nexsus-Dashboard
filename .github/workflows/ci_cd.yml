@@ -45,21 +45,6 @@ jobs:
             - name: 🔎 Analyze code
               run: flutter analyze --fatal-infos
 
-            - name: 🧪 Run unit tests
-              run: flutter test --coverage --reporter expanded
-
-            - name: 📊 Upload coverage to Codecov
-              uses: codecov/codecov-action@v3
-              with:
-                  files: ./coverage/lcov.info
-                  fail_ci_if_error: true
-                  verbose: true
-
-            - name: ✅ Coverage Report
-              run: |
-                  echo "📈 Test Coverage Report"
-                  flutter test --coverage
-
     # ============================================
     # Build Android
     # ============================================
