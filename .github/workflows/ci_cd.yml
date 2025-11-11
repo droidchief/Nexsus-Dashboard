@@ -23,7 +23,7 @@ jobs:
     timeout-minutes: 30
 
     steps:
-      - name: 📥 Checkout repository
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: ☕ Setup Java
@@ -32,17 +32,17 @@ jobs:
           distribution: "zulu"
           java-version: ${{ env.JAVA_VERSION }}
 
-      - name: 🐦 Setup Flutter
+      - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}
           channel: "stable"
           cache: true
 
-      - name: 📦 Get dependencies
+      - name: Get dependencies
         run: flutter pub get
 
-      - name: 🔎 Analyze code
+      - name: Analyze code
         run: flutter analyze --fatal-infos
 
   # ============================================
@@ -56,7 +56,7 @@ jobs:
     timeout-minutes: 45
 
     steps:
-      - name: 📥 Checkout repository
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: ☕ Setup Java
@@ -65,24 +65,24 @@ jobs:
           distribution: "zulu"
           java-version: ${{ env.JAVA_VERSION }}
 
-      - name: 🐦 Setup Flutter
+      - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}
           channel: "stable"
           cache: true
 
-      - name: 📦 Get dependencies
+      - name: Get dependencies
         run: flutter pub get
 
-      - name: 🔧 Decode keystore
+      - name: Decode keystore
         if: startsWith(github.ref, 'refs/tags/v')
         env:
           ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
         run: |
           echo "$ANDROID_KEYSTORE_BASE64" | base64 --decode > android/app/keystore.jks
 
-      - name: 🔑 Create key.properties
+      - name: Create key.properties
         if: startsWith(github.ref, 'refs/tags/v')
         env:
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
@@ -96,19 +96,19 @@ jobs:
           storeFile=keystore.jks
           EOF
 
-      - name: 🏗️ Build APK (Debug)
+      - name: Build APK (Debug)
         if: github.ref == 'refs/heads/develop'
         run: flutter build apk --debug --target-platform android-arm64
 
-      - name: 🏗️ Build APK (Release)
+      - name: Build APK (Release)
         if: startsWith(github.ref, 'refs/tags/v')
         run: flutter build apk --release --split-per-abi
 
-      - name: 🏗️ Build App Bundle
+      - name: Build App Bundle
         if: startsWith(github.ref, 'refs/tags/v')
         run: flutter build appbundle --release
 
-      - name: 📤 Upload APK artifact
+      - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
           name: android-apk
@@ -117,7 +117,7 @@ jobs:
             build/app/outputs/bundle/release/*.aab
           retention-days: 30
 
-      - name: 🚀 Deploy to Firebase App Distribution
+      - name: Deploy to Firebase App Distribution
         if: github.ref == 'refs/heads/develop'
         uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
@@ -140,20 +140,20 @@ jobs:
     timeout-minutes: 60
 
     steps:
-      - name: 📥 Checkout repository
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: 🐦 Setup Flutter
+      - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}
           channel: "stable"
           cache: true
 
-      - name: 📦 Get dependencies
+      - name: Get dependencies
         run: flutter pub get
 
-      - name: 🍎 Setup Xcode
+      - name: Setup Xcode
         uses: maxim-lobanov/setup-xcode@v1
         with:
           xcode-version: "latest"
@@ -164,7 +164,7 @@ jobs:
           pod install
           cd ..
 
-      - name: 🔐 Install Apple Certificate
+      - name: Install Apple Certificate
         if: startsWith(github.ref, 'refs/tags/v')
         env:
           BUILD_CERTIFICATE_BASE64: ${{ secrets.IOS_BUILD_CERTIFICATE_BASE64 }}
@@ -194,15 +194,15 @@ jobs:
           mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
           cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
 
-      - name: 🏗️ Build iOS (Debug)
+      - name: Build iOS (Debug)
         if: github.ref == 'refs/heads/develop'
         run: flutter build ios --debug --no-codesign
 
-      - name: 🏗️ Build iOS (Release)
+      - name: Build iOS (Release)
         if: startsWith(github.ref, 'refs/tags/v')
         run: flutter build ios --release --no-codesign
 
-      - name: 📦 Create IPA
+      - name: Create IPA
         if: startsWith(github.ref, 'refs/tags/v')
         run: |
           cd build/ios/iphoneos
@@ -210,7 +210,7 @@ jobs:
           cp -r Runner.app Payload
           zip -r nexus_dashboard.ipa Payload
 
-      - name: 📤 Upload IPA artifact
+      - name: Upload IPA artifact
         if: startsWith(github.ref, 'refs/tags/v')
         uses: actions/upload-artifact@v4
         with:
@@ -218,7 +218,7 @@ jobs:
           path: build/ios/iphoneos/nexus_dashboard.ipa
           retention-days: 30
 
-      - name: 🚀 Deploy to TestFlight
+      - name: Deploy to TestFlight
         if: startsWith(github.ref, 'refs/tags/v')
         env:
           APP_STORE_CONNECT_API_KEY: ${{ secrets.APP_STORE_CONNECT_API_KEY }}
@@ -228,7 +228,7 @@ jobs:
             --file build/ios/iphoneos/nexus_dashboard.ipa \
             --apiKey $APP_STORE_CONNECT_API_KEY
 
-      - name: 🧹 Clean up keychain
+      - name: Clean up keychain
         if: always() && startsWith(github.ref, 'refs/tags/v')
         run: |
           security delete-keychain $RUNNER_TEMP/app-signing.keychain-db
@@ -243,7 +243,7 @@ jobs:
     if: always()
 
     steps:
-      - name: 📧 Email Notification
+      - name: Email Notification
         if: failure()
         uses: dawidd6/action-send-mail@v3
         with:
